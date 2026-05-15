@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="tower-defense" default="compile" basedir=".">
+    <property name="lib.dir" value="lib"/>
+
+    <property name="checkstyle.jar" value="${lib.dir}/checkstyle-6.2.1.jar"/>
+
+    <property name="main-class" value="Juego"/>
+
+
+    <fileset dir="." id="files">
+        <include name="*.java"/>
+    </fileset>
+    <pathconvert pathsep=" " property="file-list" refid="files">
+        <mapper>
+            <flattenmapper />
+        </mapper>
+    </pathconvert>
+
+   <target name="compile">
+        <javac srcdir="." destdir="." includeantruntime="false" taskname="">
+        </javac>
+    </target>
+
+    <target name="checkstyle">
+        <java jar="${checkstyle.jar}" fork="true" taskname="" failonerror="true">
+            <arg line="${file-list}"/>
+        </java>
+    </target>
+
+    <target name="javadoc">
+        <java jar="${checkstyle.jar}" fork="true" taskname="" failonerror="true">
+            <arg line="${file-list}"/>
+            <arg value="-j"/>
+        </java>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="${main-class}" classpath="." taskname="" fork="true">
+        </java>
+    </target>
+
+</project>
